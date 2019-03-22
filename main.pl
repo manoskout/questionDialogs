@@ -54,13 +54,68 @@ updateKB(Request):-
           
           <ul class="collapsible popout">
             <li>
-              <a class="black-text collapsible-header red" href="/deleteRulePage"><i class="material-icons left" >delete_forever</i>Διαγραφή κανόνα</a>
+              <div class="collapsible-header red"><i class="material-icons">delete_forever</i>Διαγραφή κανόνα</div>
+              <div class="collapsible-body">
+
+                <form class="col s12" action="/delSuc" method="POST">             
+                  <div class="input-field col s12">
+                    <input id="idtoEdit" name="ruleId" type="text" class="validate">
+                    <label for="idtoEdit">Δώσε RuleId για διαγραφή : </label>
+                  </div>
+                  <br><br>
+                  <button class="black-text btn waves-effect waves-light red" type="submit" name="action">Delete</button>
+                </form> 
+              </div>
             </li>
             <li>
-              <a class="black-text collapsible-header yellow" href="/editRulePage"><i class="material-icons left" >edit</i>Επεξεργασία κανόνα</a>
+              <div class="collapsible-header yellow"><i class="material-icons">border_color</i>Επεξεργασία κανόνα</div>
+              <div class="collapsible-body">
+
+                <form class="col s12" action="/editSuc" method="POST">     
+                  <div class="input-field col s12">
+                    <input id="idtoEdit" name="ruleIdforEdit" type="text" class="validate">
+                    <label for="idtoEdit">Δώσε RuleId για επεξεργασία : </label>
+                  </div>        
+                  <div class="input-field col s12">
+                    <input id="dataR" name="newRuleData" type="text" class="validate" value="values([Lab_values,Which_ones,Oxidability,Cloudy_water,Colour_of_water])">
+                    <label for="dataR">Δώσε τα δεδομένα : </label>
+                  </div>
+                  <div class="input-field col s12">
+                    <input id="conR" name="newRuleCon" type="text" class="validate">
+                    <label for="conR">Δώσε τις προυποθέσεις :  </label>
+                  </div>
+                  <div class="input-field col s12">
+                    <input id="resR" name="newRuleResult" type="text" class="validate">
+                    <label for="resR">Δώσε το αποτέλεσμα : </label>
+                  </div>
+                  <br>
+                  <button class="black-text btn waves-effect waves-light yellow" type="submit" name="action">Edit</button>
+                </form> 
+              </div>
             </li>
             <li>
-              <a class="black-text collapsible-header green" href="/addRulePage"><i class="material-icons left" >add_box</i>Προσθήκη κανόνα</a>
+            <li>
+              <div class="collapsible-header green"><i class="material-icons">add_box</i>Προσθήκη κανόνα</div>
+              <div class="collapsible-body">
+
+                <form class="col s12" action="/addSuc" method="POST">             
+                  <div class="input-field col s12">
+                    <input id="dataR" name="newRuleData" type="text" class="validate" value="values([Lab_values,Which_ones,Oxidability,Cloudy_water,Colour_of_water])">
+                    <label for="dataR">Δώσε τα δεδομένα : </label>
+                  </div>
+                  <div class="input-field col s12">
+                    <input id="conR" name="newRuleCon" type="text" class="validate">
+                    <label for="conR">Δώσε τις προυποθέσεις :  </label>
+                  </div>
+                  <div class="input-field col s12">
+                    <input id="resR" name="newRuleResult" type="text" class="validate">
+                    <label for="resR">Δώσε το αποτέλεσμα : </label>
+                  </div>
+                  <br>
+                  <button class="black-text btn waves-effect waves-light green" type="submit" name="action">Add</button>
+                </form>
+
+              </div>
             </li>
             <li>
               <div class="collapsible-header"><i class="material-icons">whatshot</i>Προβολή Βάσης Γνώσης</div>
@@ -231,35 +286,6 @@ checkResults(RuleId, TermOfRuleDataResult, Answer2,Results):-
     (bagof(Answer2, rule(RuleId, TermOfRuleDataResult, Answer2), Results));
     (Results = 'Ουπς!Δεν υπάρχει στην Βάση Γνωσης μπορείς αν θές να το προσθέσεις.').
 
-/*  ΣΕΛΙΔΑ ΕΙΣΑΓΩΓΗΣ ΝΕΟΥ ΚΑΝΟΝΑ*/
-
-addRule_pa(_Request):-
-  reply_html_page(
-      [\headTemplate],
-      [\bodyTemplate, \['<h6 class="center"><b><u>Ενημέρωση της Βάσης Γνώσης.</u></b></h6><br>'],
-        div([class="container center"],[\['
-          <form class="col s12" action="/addSuc" method="POST">             
-            <div class="input-field col s12">
-              <input id="dataR" name="newRuleData" type="text" class="validate" value="values([Lab_values,Which_ones,Oxidability,Cloudy_water,Colour_of_water])">
-              <label for="dataR">Δώσε τα δεδομένα : </label>
-            </div>
-            <div class="input-field col s12">
-              <input id="conR" name="newRuleCon" type="text" class="validate">
-              <label for="conR">Δώσε τις προυποθέσεις :  </label>
-            </div>
-            <div class="input-field col s12">
-              <input id="resR" name="newRuleResult" type="text" class="validate">
-              <label for="resR">Δώσε το αποτέλεσμα : </label>
-            </div>
-            <br>
-            <a class="waves-effect waves-light btn-small" href="/update"><i class="material-icons left" >arrow_back</i>Back</a>
-            <button class="black-text btn waves-effect waves-light green" type="submit" name="action">ADD</button>
-            <a class="waves-effect waves-light btn-small" href="/"><i class="material-icons left" >home</i>Home</a> 
-            <br><br><br>
-          </form> 
-          ']
-        ])  
-  ]).
 
 /*  ΑΚΟΛΟΥΘΕΙ Η ΣΕΛΙΔΑ addition ΟΠΟΥ ΜΑΣ ΒΓΑΖΕΙ ΑΝ ΕΓΙΝΕ Η ΕΙΣΑΓΩΓΗ ΕΠΙΤΥΧΩΣ  */
 addition(Request):-
@@ -284,26 +310,6 @@ addition(Request):-
 
 /* ΣΕΛΙΔΑ ΔΙΑΓΡΑΦΉΣ ΚΑΝΟΝΑ */
 
-deleteRule_pa(_Request):-
-  reply_html_page(
-      [\headTemplate],
-      [\bodyTemplate, \['<h6 class="center"><b><u>Ενημέρωση της Βάσης Γνώσης.</u></b></h6><br>'],
-        div([class="container center"],[\['
-          <form class="col s12" action="/delSuc" method="POST">             
-            <div class="input-field col s12">
-              <input id="idtoEdit" name="ruleId" type="text" class="validate">
-              <label for="idtoEdit">Δώσε RuleId για διαγραφή : </label>
-            </div>
-            <br><br>
-            <a class="waves-effect waves-light btn-small" href="http://localhost:8080/update"><i class="material-icons left" >arrow_back</i>Back</a>
-            <button class="black-text btn waves-effect waves-light red" type="submit" name="action">ΔΙΑΓΡΑΦΗ</button>
-            <a class="waves-effect waves-light btn-small" href="http://localhost:8080"><i class="material-icons left" >home</i>Home</a> 
-            <br><br><br>
-          </form> 
-          ']
-        ])  
-  ]).
-
 deletion(Request):-
   http_parameters(Request,[
     ruleId(Id,[default('NULL')])
@@ -320,38 +326,6 @@ deletion(Request):-
     ]).
 
 /* ΣΕΛΙΔΑ ΕΠΕΞΕΡΓΑΣΙΑΣ ΕΝΟΣ ΥΠΑΡΧΟΝΤΟΣ ΚΑΝΟΝΑ ΣΤΟ ΣΥΣΤΗΜΑ ΓΝΩΣΗΣ */
-
-editRule_pa(_Request):-
-  reply_html_page(
-      [\headTemplate],
-      [\bodyTemplate, \['<h6 class="center"><b><u>Ενημέρωση της Βάσης Γνώσης.</u></b></h6><br>'],
-        div([class="container center"],[\['
-          <form class="col s12" action="/editSuc" method="POST">     
-            <div class="input-field col s12">
-              <input id="idtoEdit" name="ruleIdforEdit" type="text" class="validate">
-              <label for="idtoEdit">Δώσε RuleId για επεξεργασία : </label>
-            </div>        
-            <div class="input-field col s12">
-              <input id="dataR" name="newRuleData" type="text" class="validate" value="values([Lab_values,Which_ones,Oxidability,Cloudy_water,Colour_of_water])">
-              <label for="dataR">Δώσε τα δεδομένα : </label>
-            </div>
-            <div class="input-field col s12">
-              <input id="conR" name="newRuleCon" type="text" class="validate">
-              <label for="conR">Δώσε τις προυποθέσεις :  </label>
-            </div>
-            <div class="input-field col s12">
-              <input id="resR" name="newRuleResult" type="text" class="validate">
-              <label for="resR">Δώσε το αποτέλεσμα : </label>
-            </div>
-            <br>
-            <a class="waves-effect waves-light btn-small" href="/update"><i class="material-icons left" >arrow_back</i>Back</a>
-            <button class="black-text btn waves-effect waves-light green" type="submit" name="action">ADD</button>
-            <a class="waves-effect waves-light btn-small" href="/"><i class="material-icons left" >home</i>Home</a> 
-            <br><br><br>
-          </form> 
-          ']
-        ])  
-  ]).
 
 edition(Request):-
   http_parameters(Request,[
