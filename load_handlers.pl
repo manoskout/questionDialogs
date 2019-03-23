@@ -5,7 +5,7 @@
 :-use_module(library(http/http_error)).
 :-use_module(library(http/http_parameters)).
 :-use_module(library(http/http_session)).
-
+:-use_module(library(http/http_path)).
 
 :-http_handler('/',web_form,[]).
 :-http_handler('/apotelesmata', results,[]).

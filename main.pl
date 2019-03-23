@@ -46,6 +46,8 @@ web_form(_Request):-
 /*  ΣΕΛΙΔΑ ΕΠΙΛΟΓΩΝ ΓΙΑ ΕΝΗΜΕΡΩΣΗ ΤΗΣ ΒΑΣΗΣ ΓΝΩΣΗΣ  */
 
 updateKB(Request) :-
+/* Kathe fora pou thn kaloume katharizoume ta cache den einai poly anagkaio alla otan xtizeis thn selida apofeugeis merika problhmata*/
+    http_clean_location_cache,
     reply_html_page(
       [\headTemplate],
       [\bodyTemplate, \['<h6 class="center"><b><u>Ενημέρωση της Βάσης Γνώσης.</u></b></h6><br>'],
@@ -54,7 +56,7 @@ updateKB(Request) :-
           <ul class="collapsible popout">
             <li>
                              <!-- ---------------------------------------------------- Delete Collapsible ---------------------------------------------------- -->
-              <div class="collapsible-header red"><i class="material-icons">delete_forever</i>Διαγραφή κανόνα</div>
+              <div class="collapsible-header red"><i class="material-icons">delete_forever</i>Διαγραφή κανόνα <span style="display:none" id="redBadge" class="new badge red">1</span></div>
               <div class="collapsible-body">
 
                 <form class="col s12" action="/delSuc" method="POST">             
@@ -63,7 +65,7 @@ updateKB(Request) :-
                     <label for="idtoEdit">Δώσε RuleId για διαγραφή : </label>
                   </div>
                   <br><br>
-                  <button class="black-text btn waves-effect waves-light red" type="submit" name="action" onclick="M.toast({html: \u0039I am a toast\u0039})">Delete</button>
+                  <button class="black-text btn waves-effect waves-light red" type="submit" name="action" onclick="showDelUpdate(\u0039redBadge\u0039)">Delete</button>
                 </form> 
               </div>
             </li>
@@ -89,7 +91,7 @@ updateKB(Request) :-
                     <label for="resR">Δώσε το αποτέλεσμα : </label>
                   </div>
                   <br>
-                  <button class="black-text btn waves-effect waves-light yellow" type="submit" name="action" onclick="M.toast({html: \u0039I am a toast\u0039})" >Edit</button>
+                  <button class="black-text btn waves-effect waves-light yellow" type="submit" name="action" onclick="M.toast({completeCallback: function(){alert(\u0039Your toast was dismissed\u0039)}})" >Edit</button>
                 </form> 
               </div>
             </li>
@@ -111,13 +113,13 @@ updateKB(Request) :-
                     <label for="resR">Δώσε το αποτέλεσμα : </label>
                   </div>
                   <br>
-                  <button class="black-text btn waves-effect waves-light green" type="submit" name="action" onclick="M.toast({html: \u0039I am a toast\u0039})" >Add</button>
+                  <button class="black-text btn waves-effect waves-light green" type="submit" name="action" onclick="M.toast({function(){alert(\u0039Your toast was dismissed\u0039)}})" >Add</button>
                 </form>
 
               </div>
             </li>
             <ul class ="collapsible expandable">
-              <li>
+              <li >
                 <div class="collapsible-header"><i class="material-icons">whatshot</i>Προβολή Βάσης Γνώσης</div>
                 <div class="collapsible-body">
                   <iframe src="/kb" frameborder="0" height="400" width="100%"></iframe>
@@ -139,7 +141,6 @@ updateKB(Request) :-
           ]
         ])  
       ]).
-	  	
 /* ΣΕΛΙΔΑ ΓΙΑ ΤΗΝ ΔΙΑΓΝΩΣΗ ΠΕΡΙΒΑΛΛΟΝΤΙΚΟ ΣΥΣΤΗΜΑ ΓΝΩΣΗΣ*/
 
 

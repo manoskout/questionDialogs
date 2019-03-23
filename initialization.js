@@ -10,6 +10,10 @@
     
   });
 
+  function showDiv(toggle){
+    document.getElementById(redBadge).style.display = 'block';
+    }
+
   document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('.modal');
     var instances = M.Modal.init(elems, {
