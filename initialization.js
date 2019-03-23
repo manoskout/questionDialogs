@@ -1,6 +1,10 @@
   document.addEventListener('DOMContentLoaded', function() {
     var elem = document.querySelector('.collapsible');
-    var instance = M.Collapsible.init(elem, {
+    var instanceEDIT = M.Collapsible.init(elem, {
+      accordion: true
+    });
+    var elem = document.querySelector('.collapsible.expandable');
+    var instanceKB = M.Collapsible.init(elem, {
       accordion: false
     });
     

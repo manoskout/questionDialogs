@@ -45,15 +45,15 @@ web_form(_Request):-
 	  
 /*  ΣΕΛΙΔΑ ΕΠΙΛΟΓΩΝ ΓΙΑ ΕΝΗΜΕΡΩΣΗ ΤΗΣ ΒΑΣΗΣ ΓΝΩΣΗΣ  */
 
-updateKB(Request):-
+updateKB(Request) :-
     reply_html_page(
       [\headTemplate],
       [\bodyTemplate, \['<h6 class="center"><b><u>Ενημέρωση της Βάσης Γνώσης.</u></b></h6><br>'],
         div([class="container center"],[\['
           <p>Σε αυτό το σημείο μπορείς να επιλέξεις μια από τις παρακάτω επιλογές για να ενημερώσεις την Βάση Γνώσης.</p>
-          
           <ul class="collapsible popout">
             <li>
+                             <!-- ---------------------------------------------------- Delete Collapsible ---------------------------------------------------- -->
               <div class="collapsible-header red"><i class="material-icons">delete_forever</i>Διαγραφή κανόνα</div>
               <div class="collapsible-body">
 
@@ -63,14 +63,14 @@ updateKB(Request):-
                     <label for="idtoEdit">Δώσε RuleId για διαγραφή : </label>
                   </div>
                   <br><br>
-                  <button class="black-text btn waves-effect waves-light red" type="submit" name="action">Delete</button>
+                  <button class="black-text btn waves-effect waves-light red" type="submit" name="action" onclick="M.toast({html: \u0039I am a toast\u0039})">Delete</button>
                 </form> 
               </div>
             </li>
             <li>
+                              <!-- ---------------------------------------------------- Edit Collapsible ---------------------------------------------------- -->
               <div class="collapsible-header yellow"><i class="material-icons">border_color</i>Επεξεργασία κανόνα</div>
               <div class="collapsible-body">
-
                 <form class="col s12" action="/editSuc" method="POST">     
                   <div class="input-field col s12">
                     <input id="idtoEdit" name="ruleIdforEdit" type="text" class="validate">
@@ -89,15 +89,14 @@ updateKB(Request):-
                     <label for="resR">Δώσε το αποτέλεσμα : </label>
                   </div>
                   <br>
-                  <button class="black-text btn waves-effect waves-light yellow" type="submit" name="action">Edit</button>
+                  <button class="black-text btn waves-effect waves-light yellow" type="submit" name="action" onclick="M.toast({html: \u0039I am a toast\u0039})" >Edit</button>
                 </form> 
               </div>
             </li>
             <li>
-            <li>
+                            <!-- ---------------------------------------------------- Add Collapsible ---------------------------------------------------- -->
               <div class="collapsible-header green"><i class="material-icons">add_box</i>Προσθήκη κανόνα</div>
               <div class="collapsible-body">
-
                 <form class="col s12" action="/addSuc" method="POST">             
                   <div class="input-field col s12">
                     <input id="dataR" name="newRuleData" type="text" class="validate" value="values([Lab_values,Which_ones,Oxidability,Cloudy_water,Colour_of_water])">
@@ -112,21 +111,26 @@ updateKB(Request):-
                     <label for="resR">Δώσε το αποτέλεσμα : </label>
                   </div>
                   <br>
-                  <button class="black-text btn waves-effect waves-light green" type="submit" name="action">Add</button>
+                  <button class="black-text btn waves-effect waves-light green" type="submit" name="action" onclick="M.toast({html: \u0039I am a toast\u0039})" >Add</button>
                 </form>
 
               </div>
             </li>
-            <li>
-              <div class="collapsible-header"><i class="material-icons">whatshot</i>Προβολή Βάσης Γνώσης</div>
-              <div class="collapsible-body">
-                <iframe src="/kb" frameborder="0" height="400" width="100%"></iframe>
-              </div>
-            </li>
-            <li>
-              <a class="black-text collapsible-header teal" href="/"><i class="material-icons left" >home</i>Αρχική</a>
-            </li>
+            <ul class ="collapsible expandable">
+              <li>
+                <div class="collapsible-header"><i class="material-icons">whatshot</i>Προβολή Βάσης Γνώσης</div>
+                <div class="collapsible-body">
+                  <iframe src="/kb" frameborder="0" height="400" width="100%"></iframe>
+                </div>
+              </li>
+              <li>
+                <a class="black-text collapsible-header teal" href="/"><i class="material-icons left" >home</i>Αρχική</a>
+              </li>
+            </ul>
+
+            
           </ul>
+          
 
 
 
@@ -297,15 +301,11 @@ addition(Request):-
         newRuleResult(RuleResult,[length>0, string])
     ]),
     addRule(RuleData,RuleCon,RuleResult),
-    reply_html_page(
-      [\headTemplate],
-      [\bodyTemplate, \['<h6 class="center"><b><u>Ενημέρωση της Βάσης Γνώσης.</u></b></h6><br>'],
-        div([class="container center"],[\['
-          <p>Η εισαγωγή έγινε επιτυχώς.</p>
-          <a class="waves-effect waves-light btn-small" href="/"><i class="material-icons left" >home</i>Home</a> 
-          ']
-        ])  
-      ]).
+    /*
+    http_redirect(+How, +To, +Request)
+    H xrhsh toy http_redirect einai gia na epistrepsoume pali sthn idia selida , na kanoume ena refresh ousiastika sthn diki mas selida
+  to idio kanoume kai parakatw (sta alla duo) */
+    http_redirect(moved, '/update',_).
 
 
 /* ΣΕΛΙΔΑ ΔΙΑΓΡΑΦΉΣ ΚΑΝΟΝΑ */
@@ -314,16 +314,8 @@ deletion(Request):-
   http_parameters(Request,[
     ruleId(Id,[default('NULL')])
     ]),
-    deleteRule(Id),
-    reply_html_page(
-      [\headTemplate],
-      [\bodyTemplate,\['<h6 class="center"><b><u>Ενημέρωση της Βάσης Γνώσης.</u></b></h6><br>'],
-        div([class="container center"],[\['
-          <p>Η διαγραφή έγινε επιτυχώς.</p>
-          <a class="waves-effect waves-light btn-small" href="/"><i class="material-icons left" >home</i>Home</a> 
-        ']
-      ])  
-    ]).
+  deleteRule(Id),
+  http_redirect(moved, '/update',_).
 
 /* ΣΕΛΙΔΑ ΕΠΕΞΕΡΓΑΣΙΑΣ ΕΝΟΣ ΥΠΑΡΧΟΝΤΟΣ ΚΑΝΟΝΑ ΣΤΟ ΣΥΣΤΗΜΑ ΓΝΩΣΗΣ */
 
@@ -335,15 +327,7 @@ edition(Request):-
     newRuleResult(RuleResult,[length>0, string])
   ]),
   editRule(RuleId,RuleData,RuleCon,RuleResult),
-  reply_html_page(
-  [\headTemplate],
-  [\bodyTemplate,\['<h6 class="center"><b><u>Ενημέρωση της Βάσης Γνώσης.</u></b></h6><br>'],
-  div([class="container center"],[\['
-    <p>Η τροποποίηση έγινε επιτυχώς.</p>
-    <a class="waves-effect waves-light btn-small" href="/"><i class="material-icons left" >home</i>Home</a> 
-    ']
-    ])  
-  ]).
+  http_redirect(moved, '/update',_).
 
  
 

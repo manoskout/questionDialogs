@@ -20,6 +20,7 @@
 :-http_handler('/editSuc',edition,[]).
 :-http_handler('/delSuc',deletion,[]).
 
+
 /* Εδώ ουσιαστικά ανεβάζουμε στον σέρβερ το kb.pl για να εμφανίσουμε τους κανόνες στην σελίδα μας */ 
 :- http_handler('/kb',  http_reply_file('KB.pl', []), []).
 :- http_handler('/initialization.js', http_reply_file('initialization.js',[]),[]).
